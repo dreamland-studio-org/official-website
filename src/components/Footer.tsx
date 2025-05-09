@@ -15,7 +15,7 @@ export default function Footer() {
 
           <div className="flex flex-col md:flex-row md:space-x-12 justify-center mb-6 md:mb-0">
             <div className="mb-6 md:mb-0">
-              <h3 className="font-bold text-lg mb-3">其他服務</h3>
+              <h3 className="font-bold text-lg mb-3">旗下服務</h3>
               <ul className="space-y-2">
                 <li>
                   <a
