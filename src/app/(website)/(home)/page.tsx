@@ -52,7 +52,7 @@ export default function Home() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-gray-500 md:text-lg mt-1.5 mb-1.5 text-sm text-center flex items-center"
         >
-          打造新生態，減少城鄉教育資源差距
+          打造新生態，改變臺灣教育現況。減少城鄉教育資源差距，舊俗臺灣教育受害者
         </motion.div>
       </div>
 
