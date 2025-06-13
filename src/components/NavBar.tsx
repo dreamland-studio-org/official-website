@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import logo from "@/assets/logo.png";
+// import logo from "@/assets/logo.png";
 import { Discord } from "react-bootstrap-icons";
 
 export default function Navbar() {
@@ -38,7 +38,7 @@ export default function Navbar() {
       <div className="mt-5 w-full h-18 flex justify-between items-center bg-white shadow-md rounded-lg px-4">
         {/* Left area with logo */}
         <div className="w-1/4 flex items-center space-x-2">
-          <Image src={logo} alt="logo" width={40} height={40}></Image>
+          <Image src={"/assets/logo.png"} alt="logo" width={40} height={40}></Image>
           <h1 className="text-lg font-bold text-gray-800 hidden md:block">築夢之地工作室</h1>
         </div>
 

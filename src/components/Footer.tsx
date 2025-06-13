@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="py-8 md:flex md:items-center md:justify-between">
           <div className="flex justify-center md:justify-start mb-6 md:mb-0">
             <h2 className="font-bold">
-              <Image src={logo} alt="logo" width={60} height={60}></Image>
+              <Image src={"/assets/logo.png"} alt="logo" width={60} height={60}></Image>
             </h2>
           </div>
 

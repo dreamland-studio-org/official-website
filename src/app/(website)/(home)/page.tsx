@@ -3,23 +3,23 @@ import Image from "next/image";
 import logo from "@/assets/logo.png";
 import { motion } from "framer-motion";
 
-import Squares from "@/components/background/Squares";
+// import Squares from "@/components/background/Squares";
+import Particles from "@/components/background/Particles";
 
 const services = [
   {
     title: "會考霸｜Kaobar",
     description: "提供應屆會考生與教師免費的會考資源",
     icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253",
-    link: "https://kaobar.dreamland-studio.org"
-
+    link: "https://kaobar.dreamland-studio.org",
   },
   {
     title: "雲學院",
     description:
       "提供學生、用戶們一個線上學習社群，自由再裡面討論、探討、交流課業相關問題",
     icon: "M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122",
-    link: "https://discord.gg/D5QweR8DvJ"
-  }
+    link: "https://discord.gg/D5QweR8DvJ",
+  },
 ];
 
 export default function Home() {
@@ -27,12 +27,15 @@ export default function Home() {
     <div>
       <div>
         <div className="absolute top-0 left-0 w-full h-screen z-0">
-          <Squares
-            speed={0.5}
-            squareSize={37}
-            direction="diagonal" // up, down, left, right, diagonal
-            borderColor="#595959"
-            hoverFillColor="#fff"
+          <Particles
+            particleColors={["#000", "#000"]}
+            particleCount={200}
+            particleSpread={10}
+            speed={0.1}
+            particleBaseSize={100}
+            moveParticlesOnHover={true}
+            alphaParticles={false}
+            disableRotation={false}
           />
         </div>
         <div className="absolute top-0 bg-white/15 h-screen w-full backdrop-blur-[1px] "></div>
@@ -91,7 +94,11 @@ export default function Home() {
                 </div>
                 <p className="text-sm text-gray-700">{service.description}</p>
                 <div className="mt-3 pt-3 border-t border-gray-200 flex justify-end">
-                  <a href={service.link} target="_blank" className="text-gray-800 hover:text-black text-xs font-medium flex items-center">
+                  <a
+                    href={service.link}
+                    target="_blank"
+                    className="text-gray-800 hover:text-black text-xs font-medium flex items-center"
+                  >
                     了解更多
                     <svg
                       className="w-3 h-3 ml-1"
