@@ -35,16 +35,16 @@ export default function Navbar() {
 
   return (
     <div className="fixed top-0 w-[80%] mx-[10%] z-50">
-      <div className="mt-5 w-full h-18 flex justify-between items-center bg-white shadow-md rounded-lg px-4">
+      <div className="mt-5 w-full h-18 flex justify-center items-center rounded-lg px-4">
         {/* Left area with logo */}
-        <div className="w-1/4 flex items-center space-x-2">
-          <Image src={"/assets/logo.png"} alt="logo" width={40} height={40}></Image>
+        <div className="w-1/4 flex justify-center items-center space-x-2">
+          <Image src={"/assets/Black.png"} alt="logo" width={40} height={40}></Image>
           <h1 className="text-lg font-bold text-gray-800 hidden md:block">築夢之地工作室</h1>
         </div>
 
         {/* Center area with navigation */}
         {/* <div className="w-1/2 flex justify-center items-center"> */}
-        <div className="flex justify-center items-center">
+        {/* <div className="flex justify-center items-center">
           <div className="flex items-center space-x-8">
             {navItems.map((item, index) => {
               const isActive = pathname === item.path;
@@ -76,7 +76,7 @@ export default function Navbar() {
               );
             })}
           </div>
-        </div>
+        </div> */}
 
         {/* Right area with social links */}
         {/* <div className="w-1/4 flex justify-end items-center">

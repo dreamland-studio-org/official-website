@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/Black.png";
 import { motion } from "framer-motion";
 
 // import Squares from "@/components/background/Squares";
@@ -45,15 +45,16 @@ export default function Home() {
           initial={{ clipPath: "inset(0% 50% 0% 50%)" }}
           animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="text-black text-2xl font-bold mt-1.5 mb-1.5 tracking-[4px] md:text-4xl text-center"
+          className="text-black text-2xl mt-1.5 tracking-[4px] md:text-4xl text-center flex"
         >
-          教育不該有距離，夢想不該有邊界
+          <img src={"/assets/Black_word.png"} alt="logo" className="w-80" ></img>
+          {/* 夢之地工作室 */}
         </motion.div>
         <motion.div
           initial={{ clipPath: "inset(0% 50% 0% 50%)" }}
           animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-gray-500 md:text-lg mt-1.5 mb-1.5 text-sm text-center flex items-center"
+          className="text-gray-500 md:text-lg mb-1.5 text-sm text-center flex items-center"
         >
           打造新教育生態，改變臺灣教育現況。
         </motion.div>
