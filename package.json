@@ -26,7 +26,5 @@
     "tailwindcss": "^4",
     "typescript": "^5"
   },
-  "engines": {
-    "node": ">=22.16.0"
-  }
+  "packageManager": "yarn@4.9.3"
 }
