@@ -1,8 +1,7 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
-  assetPrefix: "/"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    runtime: 'edge',
+  },
 };
-
 export default nextConfig;
