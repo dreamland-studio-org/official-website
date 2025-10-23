@@ -4,8 +4,9 @@ import { Home, Users, Calendar, CheckSquare, Info } from "lucide-react";
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
-// import logo from "@/assets/logo.png";
+// import logo from "@/assets/Black_word.png";
 import { Discord } from "react-bootstrap-icons";
 
 export default function Navbar() {
@@ -34,13 +35,16 @@ export default function Navbar() {
   ];
 
   return (
-    <div className="fixed top-0 w-[80%] mx-[10%] z-50">
-      <div className="mt-5 w-full h-18 flex justify-center items-center rounded-lg px-4">
+    <div className="fixed top-0 w-full z-50">
+      <div className="mx-auto w-[20%] h-18 flex justify-center items-center rounded-b-lg bg-white">
         {/* Left area with logo */}
-        <div className="w-1/4 flex justify-center items-center space-x-2">
-          <Image src={"/assets/Black.png"} alt="logo" width={40} height={40}></Image>
-          <h1 className="text-lg font-bold text-gray-800 hidden md:block">築夢之地工作室</h1>
-        </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, ease: "linear" }}
+          className="w-[40%] flex justify-center items-center space-x-2">
+          <Image src={"/assets/Black_word.png"} alt="logo" className="w-[300px]" width={150} height={540}></Image>
+        </motion.div>
 
         {/* Center area with navigation */}
         {/* <div className="w-1/2 flex justify-center items-center"> */}

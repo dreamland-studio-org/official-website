@@ -1,20 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SEO from "@/config/SEO.json";
 import Navbar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import LogoLoader from "@/components/LogoLoader";
+import SmoothScroll from "@/components/SmoothScroll";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { Roboto } from 'next/font/google'
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const roboto = Roboto({
+  weight: '400',
+  subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
   title: SEO.default.title,
@@ -27,11 +24,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={roboto.className}>
       <body>
-        {/* <Navbar /> */}
+        <Navbar />
         {/* <LogoLoader /> */}
-        {children}
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
         <Footer />
       </body>
     </html>
