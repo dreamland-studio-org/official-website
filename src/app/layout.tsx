@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   description: SEO.default.description,
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
