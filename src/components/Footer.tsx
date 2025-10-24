@@ -25,14 +25,6 @@ export default function Footer() {
                     會考霸｜KarBao
                   </a>
                 </li>
-                <li>
-                  <a
-                    href="https://discord.gg/D5QweR8DvJ"
-                    className="hover:text-gray-600 transition duration-150"
-                  >
-                    雲學院
-                  </a>
-                </li>
               </ul>
             </div>
           </div>
