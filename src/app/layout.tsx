@@ -16,6 +16,10 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: SEO.default.title,
   description: SEO.default.description,
+  twitter: {
+    card: "summary_large_image",
+    images: "/Banner.png"
+  }
 };
 
 
