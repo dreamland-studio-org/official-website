@@ -23,6 +23,20 @@ const services = [
   },
 ];
 
+
+const coop = [
+  {
+    title: "Novainit Studio",
+    link: "https://novainit.studio",
+    logo: "novainit.png"
+  },
+  {
+    title: "The Pros With Bros",
+    link: "https://www.instagram.com/the_pros_with_bros/",
+    logo: "the_pros_with_bros.jpg"
+  },
+];
+
 export default function Home() {
   return (
     <div>
@@ -99,6 +113,62 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="text-sm text-gray-700 group-hover:-translate-y-3 duration-300 transition-all">{service.description}</div>
+                  {/* <div className="mt-3 pt-3 border-t border-gray-200 flex justify-end">
+                  <a
+                    href={service.link}
+                    target="_blank"
+                    className="text-gray-800 hover:text-black text-xs font-medium flex items-center"
+                  >
+                    了解更多
+                    <svg
+                      className="w-3 h-3 ml-1"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M9 5l7 7-7 7"
+                      ></path>
+                    </svg>
+                  </a>
+                </div> */}
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+
+      <div className="pt-15 pb-20 bg-white z-50">
+        <div className="flex flex-col items-center justify-center mx-20 px-3">
+          <div className="text-3xl font-bold text-gray-900 mb-3">
+            我們的戰略夥伴
+          </div>
+
+          <div className="grid grid-cols-1 xl:grid-cols-4 w-full gap-4">
+            {coop.map((coop, index) => (
+              <motion.div
+                initial={{ opacity: 0, transform: "translateY(-10px)" }}
+                whileInView={{ opacity: 1, transform: "translateY(10px)" }}
+                transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 * index, }}
+                key={index}
+              >
+                <Link
+                  className="bg-white rounded-lg p-4 flex-1 flex flex-col group cursor-pointer justify-center items-center"
+                  href={coop.link}
+                >
+                  <Image src={"/partner/" + coop.logo} alt="logo" className="w-[130px] rounded-[100%] group-hover:opacity-65 duration-300 transition-all" width={450} height={540}></Image>
+
+                  <div className="flex items-center mb-1">
+                    <div className="text-[24px] mt-4 group-hover:-translate-y-2 text-gray-900 duration-300 transition-all">
+                      {coop.title}
+                    </div>
+                  </div>
                   {/* <div className="mt-3 pt-3 border-t border-gray-200 flex justify-end">
                   <a
                     href={service.link}
