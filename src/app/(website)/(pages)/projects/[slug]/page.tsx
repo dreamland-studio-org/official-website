@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import getProject from "@/lib/getProject";
 
 import Image from "next/image";
