@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: SEO.default.description,
   twitter: {
     card: "summary_large_image",
-    images: "/Banner.png"
+    images: "https://raw.githubusercontent.com/dreamland-studio-org/official-website/refs/heads/main/public/Banner.png"
   }
 };
 
