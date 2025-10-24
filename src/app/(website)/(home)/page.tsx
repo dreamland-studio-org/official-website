@@ -10,12 +10,21 @@ import Link from "next/link";
 const services = [
   {
     title: "會考霸｜Kaobar",
+    idName: "kaobar",
     description: "一個整合會考資源、提供會考線上社群的免費資源整合平台，讓會考生再準備會考時事半功倍！",
     link: "https://kaobar.dreamland-studio.org",
     banner: "kaobar.png"
   },
   {
+    title: "學測霸｜GSATBar",
+    idName: "gsatbar",
+    description: "...",
+    link: "#",
+    banner: "gsatbar.png"
+  },
+  {
     title: "OUTBOX",
+    idName: "outbox",
     description:
       "這是一個所有人都能參加的創意競賽，你能使用AI以及你那創意的大腦發揮創意，創造、生成出一個作品並投稿上來，讓我們大家都看看！",
     link: "https://outbox.tw",
@@ -101,9 +110,9 @@ export default function Home() {
                 transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 * index, }}
                 key={index}
               >
-                <Link
+                <a
                   className="bg-white rounded-lg p-4 flex-1 flex flex-col group cursor-pointer"
-                  href={service.link}
+                  href={"/projects/" + service.idName}
                 >
                   <Image src={"/projects/" + service.banner} alt="logo" className="w-[full] rounded-lg group-hover:opacity-65 duration-300 transition-all" width={800} height={540}></Image>
 
@@ -136,7 +145,7 @@ export default function Home() {
                     </svg>
                   </a>
                 </div> */}
-                </Link>
+                </a>
               </motion.div>
             ))}
           </div>
@@ -158,7 +167,7 @@ export default function Home() {
                 transition={{ duration: 0.3, ease: "easeOut", delay: 0.2 * index, }}
                 key={index}
               >
-                <Link
+                <a
                   className="bg-white rounded-lg p-4 flex-1 flex flex-col group cursor-pointer justify-center items-center"
                   href={coop.link}
                 >
@@ -192,7 +201,7 @@ export default function Home() {
                     </svg>
                   </a>
                 </div> */}
-                </Link>
+                </a>
               </motion.div>
             ))}
           </div>

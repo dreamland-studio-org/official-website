@@ -38,13 +38,15 @@ export default function Navbar() {
     <div className="fixed top-0 w-full z-50">
       <div className="mx-auto w-[20%] h-18 flex justify-center items-center rounded-b-lg bg-white">
         {/* Left area with logo */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, ease: "linear" }}
-          className="w-[40%] flex justify-center items-center space-x-2">
-          <Image src={"/assets/Black_word.png"} alt="logo" className="w-[300px]" width={150} height={540}></Image>
-        </motion.div>
+        <Link href={"/"} className="flex justify-center items-center">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, ease: "linear" }}
+            className="w-[40%] flex justify-center items-center space-x-2">
+            <Image src={"/assets/Black_word.png"} alt="logo" className="w-[300px]" width={150} height={540}></Image>
+          </motion.div>
+        </Link>
 
         {/* Center area with navigation */}
         {/* <div className="w-1/2 flex justify-center items-center"> */}
