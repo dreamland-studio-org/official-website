@@ -12,16 +12,15 @@ export default async function ProjectPage({
 
     const { slug } = await params;
     const data = await getProject(slug);
-    console.log(data)
     return (
-        <section className="mt-40 mb-40 flex mx-70">
-            <div className="grid grid-cols-6 gap-x-5">
+        <section className="mt-40 mb-40 flex mx-0 lg:mx-70">
+            <div className="grid md:grid-cols-1 lg:grid-cols-6 gap-x-5">
                 <div className="col-span-4">
                     <div className="tracking-[4px] text-[40px] font-[300]">{data?.name}</div>
                     <div className="tracking-[4px] text-[16px] text-[#262626] font-[300]">{data?.description}</div>
                     <Image src={"/projects/" + data?.banner} alt="" className="mt-10 w-[full] rounded-4xl" width={10000} height={0}></Image>
                 </div>
-                <div className="col-span-2">
+                <div className="col-span-2 flex flex-col items-center mx-10 md:mx-0">
                     <ul>
                         <li className="my-[20px]">
                             <div className="tracking-[2px] text-[22px] font-[400]">負責人</div>

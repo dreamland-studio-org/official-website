@@ -43,8 +43,8 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: "linear" }}
-            className="w-[40%] flex justify-center items-center space-x-2">
-            <Image src={"/assets/Black_word.png"} alt="logo" className="w-[300px]" width={150} height={540}></Image>
+            className="w-full md:w-[40%] flex justify-center items-center space-x-2">
+            <Image src={"/assets/Black_word.png"} alt="logo" className="w-full md:w-[300px]" width={150} height={540}></Image>
           </motion.div>
         </Link>
 

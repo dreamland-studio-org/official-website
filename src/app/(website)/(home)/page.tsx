@@ -63,7 +63,7 @@ export default function Home() {
           initial={{ clipPath: "inset(0% 50% 0% 50%)" }}
           animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-gray-800 md:text-[50px] mb-1.5 text-sm text-center flex items-center font-bold"
+          className="text-gray-800 md:text-[50px] mb-1.5 text-2xl text-center flex items-center font-bold"
         >
           輔助學生尋找夢想、像夢想前進<br />提供資源整合平台、開闢築夢之路，讓夢不再是夢！
         </motion.div>
