@@ -18,7 +18,7 @@ const services = [
   {
     title: "學測霸｜GSATBar",
     idName: "gsatbar",
-    description: "...",
+    description: "完全免費的學測備戰平臺",
     link: "#",
     banner: "gsatbar.png"
   },

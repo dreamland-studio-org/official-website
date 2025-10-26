@@ -22,7 +22,7 @@ const Projects: Record<string, ProjectData> = {
     },
     "gsatbar": {
         name: "學測霸｜GSATBar",
-        description: "",
+        description: "完全免費的學測備戰平臺",
         banner: "gsatbar.png",
         director: "咖喱 Ryan",
         client: "築夢之地工作室",
