@@ -75,6 +75,25 @@ export default function Home() {
         >
           幻想夢、規劃夢、實現夢<br />You Will When You Believe
         </motion.div>
+        <motion.div
+          initial={{ opacity: 0, transform: "translateY(10px)" }}
+          animate={{ opacity: 1, transform: "translateY(0px)" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mt-6 flex flex-col gap-3 sm:flex-row"
+        >
+          <Link
+            href="/oauth/demo"
+            className="rounded-full bg-emerald-400/90 px-8 py-3 text-center text-sm font-semibold text-slate-900 transition hover:bg-emerald-300"
+          >
+            OAuth 授權示範
+          </Link>
+          <Link
+            href="/oauth/authorize?client_id=demo&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback&scope=profile.basic&state=demo"
+            className="rounded-full border border-gray-300 px-8 py-3 text-center text-sm font-semibold text-gray-800 transition hover:bg-gray-100"
+          >
+            直接體驗授權頁
+          </Link>
+        </motion.div>
       </div>
 
 
