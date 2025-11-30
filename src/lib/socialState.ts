@@ -10,9 +10,10 @@ const COOKIE_NAME = 'dl_social_state';
 const MAX_AGE = 10 * 60; // 10 minutes
 const isProd = process.env.NODE_ENV === 'production';
 
-export function saveSocialState(payload: SocialStatePayload) {
+export async function saveSocialState(payload: SocialStatePayload) {
   const encoded = toBase64Url(JSON.stringify(payload));
-  cookies().set(COOKIE_NAME, encoded, {
+  const cookieStore = (await cookies()) as any;
+  cookieStore.set(COOKIE_NAME, encoded, {
     httpOnly: true,
     sameSite: 'lax',
     secure: isProd,
@@ -20,11 +21,11 @@ export function saveSocialState(payload: SocialStatePayload) {
     path: '/',
   });
 }
-
-export function consumeSocialState() {
-  const cookie = cookies().get(COOKIE_NAME);
+export async function consumeSocialState() {
+  const cookieStore = (await cookies()) as any;
+  const cookie = cookieStore.get(COOKIE_NAME);
   if (!cookie) return null;
-  cookies().delete(COOKIE_NAME);
+  cookieStore.delete(COOKIE_NAME);
   try {
     const payload = JSON.parse(fromBase64Url(cookie.value)) as SocialStatePayload;
     return payload;

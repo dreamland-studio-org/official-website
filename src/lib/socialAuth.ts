@@ -67,7 +67,7 @@ export async function upsertUserFromProvider(profile: ProviderProfile) {
       providerAccountId: profile.providerAccountId,
       userId: user.id,
       email: normalizedEmail,
-      profile: profile.profile ?? {},
+      profile: profile.profile ? JSON.stringify(profile.profile) : undefined,
     },
   });
 
