@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const code = url.searchParams.get('code');
   const state = url.searchParams.get('state');
-  const storedState = consumeSocialState();
+  const storedState = await consumeSocialState();
   const returnTo = sanitizeReturnTo(storedState?.returnTo);
   const absoluteReturn = new URL(returnTo, url.origin);
 

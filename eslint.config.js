@@ -1,7 +1,10 @@
-import next from "eslint-config-next";
+import nextConfig from "eslint-config-next";
 
 export default [
-  ...next({
-    extends: ["next/core-web-vitals"],
-  }),
+  ...nextConfig,
+  {
+    rules: {
+      "@next/next/no-img-element": "error",
+    },
+  },
 ];
