@@ -47,7 +47,7 @@ export async function getSessionFromToken(rawToken?: string) {
 }
 
 export async function getSessionUserFromCookies() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies(); // ← 必須 await
   const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
   const session = await getSessionFromToken(token);
   return session?.user ?? null;
