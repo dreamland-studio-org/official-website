@@ -81,7 +81,7 @@ export default function Home() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mt-6 flex flex-col gap-3 sm:flex-row"
         >
-          <Link
+          {/* <Link
             href="/oauth/demo"
             className="rounded-full bg-emerald-400/90 px-8 py-3 text-center text-sm font-semibold text-slate-900 transition hover:bg-emerald-300"
           >
@@ -92,7 +92,7 @@ export default function Home() {
             className="rounded-full border border-gray-300 px-8 py-3 text-center text-sm font-semibold text-gray-800 transition hover:bg-gray-100"
           >
             直接體驗授權頁
-          </Link>
+          </Link> */}
         </motion.div>
       </div>
 
