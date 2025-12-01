@@ -79,4 +79,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: '授權流程失敗' }, { status: 500 });
   }
 }
-export const runtime = 'edge';
