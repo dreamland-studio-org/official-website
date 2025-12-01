@@ -106,4 +106,3 @@ async function fetchGoogleProfile(accessToken: string) {
     name?: string;
   };
 }
-export const runtime = 'edge';

@@ -31,4 +31,3 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.redirect(authorizeUrl.toString());
 }
-export const runtime = 'edge';

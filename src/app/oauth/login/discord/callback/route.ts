@@ -107,4 +107,3 @@ async function fetchDiscordProfile(token: string, tokenType: string) {
     verified?: boolean;
   };
 }
-export const runtime = 'edge';
