@@ -24,4 +24,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: '無法登出' }, { status: 500 });
   }
 }
-export const runtime = 'edge';
