@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     });
 
     try {
-      await sendVerificationEmail(email, verificationCode, username);
+      await sendVerificationEmail(email, verificationCode, username).catch(console.error);
     } catch (emailError) {
       console.error('[register] send email failed', emailError);
       await prisma.user.delete({ where: { id: newUser.id } });
