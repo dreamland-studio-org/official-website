@@ -41,4 +41,3 @@ function extractBearerToken(headerValue: string | null) {
   if (!scheme || scheme.toLowerCase() !== 'bearer' || !token) return null;
   return token.trim();
 }
-export const runtime = 'edge';
