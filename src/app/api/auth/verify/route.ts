@@ -1,3 +1,4 @@
+export const runtime = 'nodejs';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { prisma } from '@/lib/prisma';
@@ -42,4 +43,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: '驗證失敗' }, { status: 500 });
   }
 }
-export const runtime = 'edge';
