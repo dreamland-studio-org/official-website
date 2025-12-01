@@ -42,3 +42,4 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: '驗證失敗' }, { status: 500 });
   }
 }
+export const runtime = 'edge';

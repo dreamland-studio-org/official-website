@@ -160,3 +160,4 @@ function isClientSecretValid(stored: string, provided: string) {
 
   return safeEqual(stored, hashedProvided);
 }
+export const runtime = 'edge';

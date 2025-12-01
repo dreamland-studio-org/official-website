@@ -57,3 +57,4 @@ function extractBearerToken(headerValue: string | null) {
   }
   return token.trim();
 }
+export const runtime = 'edge';

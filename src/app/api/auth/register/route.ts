@@ -75,3 +75,5 @@ export async function POST(request: NextRequest) {
 function generateVerificationCode() {
   return ('' + Math.floor(100000 + Math.random() * 900000)).substring(0, 6);
 }
+
+export const runtime = 'edge';

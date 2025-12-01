@@ -60,3 +60,4 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: '登入失敗' }, { status: 500 });
   }
 }
+export const runtime = 'edge';
