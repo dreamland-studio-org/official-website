@@ -78,10 +78,10 @@ import nodemailer from 'nodemailer';
 export async function sendVerificationEmail(to: string, code: string, username?: string | null) {
   let transporter = nodemailer.createTransport({
     host: 'mail.dreamland-studio.org',
-    port: 587,
-    secure: false,
+    port: 465,
+    secure: true,
     auth: {
-      user: 'system@dreamland-studio.org',
+      user: 'no-reply@dreamland-studio.org',
       pass: '48KoCv~sy6&3aKsf',
     },
   });
