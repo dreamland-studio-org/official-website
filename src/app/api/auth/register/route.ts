@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { prisma } from '@/lib/prisma';
 import { hashPassword } from '@/lib/password';
-import { sendVerificationEmail } from '@/lib/mailer';
+// import { sendVerificationEmail } from '@/lib/mailer';
 import { validateEmail, validateUsername } from '@/lib/validation';
 
 const MIN_PASSWORD_LENGTH = 8;
@@ -38,33 +38,34 @@ export async function POST(request: NextRequest) {
     }
 
     const passwordHash = await hashPassword(password);
-    const verificationCode = generateVerificationCode();
+    // const verificationCode = generateVerificationCode();
 
     const newUser = await prisma.user.create({
       data: {
         username,
         email,
         passwordHash,
-        verificationCode,
-        emailVerified: false,
+        // verificationCode,
+        emailVerified: true,
       },
     });
 
-    try {
-      await sendVerificationEmail(email, verificationCode, username).catch(console.error);
-    } catch (emailError) {
-      console.error('[register] send email failed', emailError);
-      await prisma.user.delete({ where: { id: newUser.id } });
-      return NextResponse.json({ error: '無法寄送驗證信，請稍後再試' }, { status: 500 });
-    }
+    // try {
+    //   await sendVerificationEmail(email, verificationCode, username).catch(console.error);
+    // } catch (emailError) {
+    //   console.error('[register] send email failed', emailError);
+    //   await prisma.user.delete({ where: { id: newUser.id } });
+    //   return NextResponse.json({ error: '無法寄送驗證信，請稍後再試' }, { status: 500 });
+    // }
 
     const responseBody: Record<string, string> = {
-      message: '註冊成功，請輸入驗證碼完成信箱驗證',
+      message: '註冊成功',
+      // message: '註冊成功，請輸入驗證碼完成信箱驗證',
     };
 
-    if (process.env.NODE_ENV !== 'production') {
-      responseBody.debugVerificationCode = verificationCode;
-    }
+    // if (process.env.NODE_ENV !== 'production') {
+    //   responseBody.debugVerificationCode = verificationCode;
+    // }
 
     return NextResponse.json(responseBody, { status: 201 });
   } catch (error) {
