@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
     // }
 
     const responseBody: Record<string, string> = {
-      message: '註冊成功',
+      message: '註冊成功，請使用帳號登入',
       // message: '註冊成功，請輸入驗證碼完成信箱驗證',
     };
 

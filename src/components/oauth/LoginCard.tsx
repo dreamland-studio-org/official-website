@@ -1,6 +1,7 @@
 'use client';
 
 import { FormEvent, useMemo, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 type LoginCardProps = {
   clientId: string;
@@ -14,7 +15,9 @@ export default function LoginCard({ clientId, redirectUri, scope, state }: Login
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const searchParams = useSearchParams();
   const authorizeUrl = useMemo(() => buildAuthorizeUrl({ clientId, redirectUri, scope, state }), [clientId, redirectUri, scope, state]);
+  const registerSuccess = searchParams?.get('registerSuccess') === '1';
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -45,6 +48,11 @@ export default function LoginCard({ clientId, redirectUri, scope, state }: Login
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5 text-sm text-black">
+      {registerSuccess && (
+        <p className="rounded-2xl border border-emerald-400/40 bg-emerald-50 px-5 py-4 text-sm text-emerald-700">
+          註冊成功，請使用新帳號登入。
+        </p>
+      )}
       <div className="rounded-2xl border border-black/10 bg-white px-5 py-4">
         <p className="text-black/70">請登入你的築夢之地帳號以繼續授權流程。</p>
       </div>
