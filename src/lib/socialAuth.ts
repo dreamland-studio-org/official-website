@@ -1,7 +1,5 @@
+import { Prisma } from '@/generated/prisma';
 import { prisma } from '@/lib/prisma';
-import { hashPassword } from '@/lib/password';
-import { generateRandomToken } from '@/lib/security';
-import { generateAvailableUsername } from '@/lib/username';
 
 type Provider = 'discord' | 'google';
 
@@ -14,15 +12,20 @@ type ProviderProfile = {
   profile?: Record<string, unknown>;
 };
 
-export async function upsertUserFromProvider(profile: ProviderProfile) {
-  const existingProvider = await prisma.userProvider.findUnique({
-    where: {
-      provider_providerAccountId: {
-        provider: profile.provider,
-        providerAccountId: profile.providerAccountId,
+let userProviderTableAvailable = true;
+let hasWarnedMissingProviderTable = false;
+
+export async function findUserFromProvider(profile: ProviderProfile) {
+  const existingProvider = await tryUseUserProviderTable(async () => {
+    return prisma.userProvider.findUnique({
+      where: {
+        provider_providerAccountId: {
+          provider: profile.provider,
+          providerAccountId: profile.providerAccountId,
+        },
       },
-    },
-    include: { user: true },
+      include: { user: true },
+    });
   });
 
   if (existingProvider) {
@@ -30,46 +33,67 @@ export async function upsertUserFromProvider(profile: ProviderProfile) {
   }
 
   const normalizedEmail = profile.email?.toLowerCase() ?? null;
-  let user = normalizedEmail
-    ? await prisma.user.findUnique({
-        where: { email: normalizedEmail },
-      })
-    : null;
-
-  if (!user) {
-    if (!normalizedEmail) {
-      throw new Error('使用第三方登入時必須提供 email');
-    }
-
-    const usernameSeed = profile.displayName ?? normalizedEmail.split('@')[0];
-    const username = await generateAvailableUsername(usernameSeed);
-    const randomPassword = generateRandomToken(16);
-    const passwordHash = await hashPassword(randomPassword);
-
-    user = await prisma.user.create({
-      data: {
-        username,
-        email: normalizedEmail,
-        passwordHash,
-        emailVerified: profile.emailVerified ?? false,
-      },
-    });
-  } else if (profile.emailVerified && !user.emailVerified) {
-    user = await prisma.user.update({
-      where: { id: user.id },
-      data: { emailVerified: true },
-    });
+  if (!normalizedEmail) {
+    return null;
   }
 
-  await prisma.userProvider.create({
-    data: {
-      provider: profile.provider,
-      providerAccountId: profile.providerAccountId,
-      userId: user.id,
-      email: normalizedEmail,
-      profile: profile.profile ? JSON.stringify(profile.profile) : undefined,
-    },
+  const matchedUser = await prisma.user.findUnique({
+    where: { email: normalizedEmail },
+  });
+
+  if (!matchedUser) {
+    return null;
+  }
+
+  const user =
+    profile.emailVerified && !matchedUser.emailVerified
+      ? await prisma.user.update({
+          where: { id: matchedUser.id },
+          data: { emailVerified: true },
+        })
+      : matchedUser;
+
+  await tryUseUserProviderTable(async () => {
+    await prisma.userProvider.create({
+      data: {
+        provider: profile.provider,
+        providerAccountId: profile.providerAccountId,
+        userId: user.id,
+        email: normalizedEmail,
+        profile: profile.profile ? JSON.stringify(profile.profile) : undefined,
+      },
+    });
   });
 
   return user;
+}
+
+async function tryUseUserProviderTable<T>(fn: () => Promise<T>) {
+  if (!userProviderTableAvailable) {
+    return null as T;
+  }
+
+  try {
+    return await fn();
+  } catch (error) {
+    if (isMissingUserProviderTableError(error)) {
+      userProviderTableAvailable = false;
+      if (!hasWarnedMissingProviderTable) {
+        hasWarnedMissingProviderTable = true;
+        console.warn('[socialAuth] user_providers table is missing; continuing without provider linkage.');
+      }
+      return null as T;
+    }
+    throw error;
+  }
+}
+
+function isMissingUserProviderTableError(error: unknown) {
+  if (!(error instanceof Prisma.PrismaClientKnownRequestError)) return false;
+  if (error.code !== 'P2021') return false;
+  const metaTable = typeof error.meta === 'object' && error.meta && 'table' in error.meta ? (error.meta as any).table : null;
+  if (typeof metaTable === 'string') {
+    return metaTable === 'user_providers';
+  }
+  return typeof error.message === 'string' && error.message.includes('user_providers');
 }

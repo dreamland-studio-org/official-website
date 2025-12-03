@@ -3,16 +3,19 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { prisma } from '@/lib/prisma';
 import { hashPassword } from '@/lib/password';
-// import { sendVerificationEmail } from '@/lib/mailer';
 import { validateEmail, validateUsername } from '@/lib/validation';
+import { consumeSocialRegisterState } from '@/lib/socialRegisterState';
+import { createUserSession, SESSION_COOKIE_NAME } from '@/lib/session';
 
 const MIN_PASSWORD_LENGTH = 8;
 
 export async function POST(request: NextRequest) {
+  const socialState = await consumeSocialRegisterState();
+
   try {
     const body = await request.json();
     const username = typeof body.username === 'string' ? body.username.trim() : '';
-    const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
+    const email = socialState?.email ?? (typeof body.email === 'string' ? body.email.trim().toLowerCase() : '');
     const password = typeof body.password === 'string' ? body.password : '';
 
     if (!validateUsername(username)) {
@@ -38,42 +41,45 @@ export async function POST(request: NextRequest) {
     }
 
     const passwordHash = await hashPassword(password);
-    // const verificationCode = generateVerificationCode();
 
     const newUser = await prisma.user.create({
       data: {
         username,
         email,
         passwordHash,
-        // verificationCode,
-        emailVerified: true,
+        emailVerified: !!socialState, // Email is considered verified from social provider
       },
     });
 
-    // try {
-    //   await sendVerificationEmail(email, verificationCode, username).catch(console.error);
-    // } catch (emailError) {
-    //   console.error('[register] send email failed', emailError);
-    //   await prisma.user.delete({ where: { id: newUser.id } });
-    //   return NextResponse.json({ error: '無法寄送驗證信，請稍後再試' }, { status: 500 });
-    // }
+    if (socialState) {
+      await prisma.userProvider.create({
+        data: {
+          provider: socialState.provider,
+          providerAccountId: socialState.providerAccountId,
+          userId: newUser.id,
+          email: socialState.email,
+          profile: JSON.stringify(socialState.profile),
+        },
+      });
+    }
 
-    const responseBody: Record<string, string> = {
-      message: '註冊成功，請使用帳號登入',
-      // message: '註冊成功，請輸入驗證碼完成信箱驗證',
-    };
+    // Automatically log the user in
+    const session = await createUserSession(newUser.id);
+    const response = NextResponse.json({ message: '註冊成功！' }, { status: 201 });
 
-    // if (process.env.NODE_ENV !== 'production') {
-    //   responseBody.debugVerificationCode = verificationCode;
-    // }
+    response.cookies.set({
+      name: SESSION_COOKIE_NAME,
+      value: session.rawToken,
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      expires: session.expiresAt,
+      path: '/',
+    });
 
-    return NextResponse.json(responseBody, { status: 201 });
+    return response;
   } catch (error) {
     console.error('[register] unexpected error', error);
     return NextResponse.json({ error: '無法建立帳號' }, { status: 500 });
   }
-}
-
-function generateVerificationCode() {
-  return ('' + Math.floor(100000 + Math.random() * 900000)).substring(0, 6);
 }

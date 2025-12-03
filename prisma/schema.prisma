@@ -12,9 +12,9 @@ datasource db {
 }
 
 model User {
-  id               Int       @id @default(autoincrement()) @map("user_id")
-  username         String    @unique
-  email            String    @unique
+  id               Int      @id @default(autoincrement()) @map("user_id")
+  username         String
+  email            String
   passwordHash     String    @map("password_hash")
   verificationCode String?   @map("verification_code") @db.Char(10)
   emailVerified    Boolean   @default(false) @map("email_verified")

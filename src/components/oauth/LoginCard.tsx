@@ -91,7 +91,7 @@ export default function LoginCard({ clientId, redirectUri, scope, state }: Login
           {isLoading ? '登入中...' : '登入並繼續'}
         </button>
 
-        {/* <div className="grid gap-2 sm:grid-cols-2">
+        <div className="grid gap-2 sm:grid-cols-2">
           <a
             href={`/oauth/login/google?returnTo=${encodeURIComponent(authorizeUrl)}`}
             className="rounded-full border border-black/10 bg-white px-4 py-2 text-center text-sm font-semibold text-black transition hover:bg-black hover:text-white"
@@ -104,7 +104,7 @@ export default function LoginCard({ clientId, redirectUri, scope, state }: Login
           >
             以 Discord 登入
           </a>
-        </div> */}
+        </div>
 
         <p className="text-xs text-black/60">
           還沒有帳號？{' '}

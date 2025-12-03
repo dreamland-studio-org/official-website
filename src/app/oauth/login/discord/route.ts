@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
   const returnTo = sanitizeReturnTo(request.nextUrl.searchParams.get('returnTo'));
   const state = generateRandomToken(16);
 
-  saveSocialState({
+  await saveSocialState({
     provider: 'discord',
     state,
     returnTo,

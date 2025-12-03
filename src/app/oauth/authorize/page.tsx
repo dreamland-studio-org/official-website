@@ -50,8 +50,6 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
           <p className="text-sm text-black/60">這個應用程式希望使用你的築夢之地帳號。</p>
         </header>
 
-        <div className="h-px bg-white/5" />
-
         {user ? (
           <ConsentCard
             username={user.username}

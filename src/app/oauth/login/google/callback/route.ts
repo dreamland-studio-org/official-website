@@ -1,8 +1,9 @@
 export const runtime = 'nodejs';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { upsertUserFromProvider } from '@/lib/socialAuth';
+import { findUserFromProvider } from '@/lib/socialAuth';
 import { consumeSocialState, sanitizeReturnTo } from '@/lib/socialState';
+import { saveSocialRegisterState } from '@/lib/socialRegisterState';
 import { createUserSession, SESSION_COOKIE_NAME } from '@/lib/session';
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
@@ -31,7 +32,7 @@ export async function GET(request: NextRequest) {
     const tokenData = await exchangeGoogleCode(code);
     const userProfile = await fetchGoogleProfile(tokenData.access_token);
 
-    const user = await upsertUserFromProvider({
+    const user = await findUserFromProvider({
       provider: 'google',
       providerAccountId: userProfile.sub,
       email: userProfile.email,
@@ -39,6 +40,17 @@ export async function GET(request: NextRequest) {
       displayName: userProfile.name ?? userProfile.email,
       profile: userProfile,
     });
+    if (!user) {
+      saveSocialRegisterState({
+        provider: 'google',
+        providerAccountId: userProfile.sub,
+        email: userProfile.email,
+        displayName: userProfile.name ?? userProfile.email,
+        profile: userProfile,
+        returnTo,
+      });
+      return NextResponse.redirect(new URL('/oauth/register', url.origin));
+    }
 
     const session = await createUserSession(user.id);
     const response = NextResponse.redirect(absoluteReturn.toString());

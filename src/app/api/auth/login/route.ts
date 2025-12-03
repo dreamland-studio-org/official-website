@@ -29,6 +29,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email 尚未驗證' }, { status: 403 });
     }
 
+    if (!user.passwordHash) {
+      return NextResponse.json({ error: '此帳號使用第三方登入，請透過社群登入繼續' }, { status: 403 });
+    }
+
     const passwordMatches = await verifyPassword(password, user.passwordHash);
 
     if (!passwordMatches) {

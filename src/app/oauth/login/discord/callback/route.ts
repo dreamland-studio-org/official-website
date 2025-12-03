@@ -1,8 +1,9 @@
 export const runtime = 'nodejs';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { upsertUserFromProvider } from '@/lib/socialAuth';
+import { findUserFromProvider } from '@/lib/socialAuth';
 import { consumeSocialState, sanitizeReturnTo } from '@/lib/socialState';
+import { saveSocialRegisterState } from '@/lib/socialRegisterState';
 import { createUserSession, SESSION_COOKIE_NAME } from '@/lib/session';
 
 const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
@@ -31,7 +32,8 @@ export async function GET(request: NextRequest) {
     const tokenData = await exchangeDiscordCode(code);
     const userProfile = await fetchDiscordProfile(tokenData.access_token, tokenData.token_type ?? 'Bearer');
 
-    const user = await upsertUserFromProvider({
+    // 判斷是否已註冊
+    let user = await findUserFromProvider({
       provider: 'discord',
       providerAccountId: userProfile.id,
       email: userProfile.email,
@@ -40,9 +42,27 @@ export async function GET(request: NextRequest) {
       profile: userProfile,
     });
 
+    if (!user) {
+      if (!userProfile.email) {
+        absoluteReturn.searchParams.set('social_error', 'discord_no_email');
+        return NextResponse.redirect(absoluteReturn.toString());
+      }
+
+      saveSocialRegisterState({
+        provider: 'discord',
+        providerAccountId: userProfile.id,
+        email: userProfile.email,
+        displayName: userProfile.global_name ?? userProfile.username,
+        profile: userProfile,
+        returnTo,
+      });
+
+      return NextResponse.redirect(new URL('/oauth/register', url.origin));
+    }
+
+    // 已註冊，建立 session 並導向授權頁
     const session = await createUserSession(user.id);
     const response = NextResponse.redirect(absoluteReturn.toString());
-
     response.cookies.set({
       name: SESSION_COOKIE_NAME,
       value: session.rawToken,
@@ -52,7 +72,6 @@ export async function GET(request: NextRequest) {
       expires: session.expiresAt,
       path: '/',
     });
-
     return response;
   } catch (error) {
     console.error('[discord oauth] failed', error);
@@ -90,14 +109,18 @@ async function exchangeDiscordCode(code: string) {
 }
 
 async function fetchDiscordProfile(token: string, tokenType: string) {
-  const response = await fetch('https://discord.com/api/users/@me', {
+  const response = await fetch('https://discord.com/api/v10/users/@me', {
+    cache: 'no-store',
     headers: {
       Authorization: `${tokenType} ${token}`,
+      Accept: 'application/json',
+      'User-Agent': 'Dreamland OAuth (support@dreamland-studio.org)',
     },
   });
 
   if (!response.ok) {
-    throw new Error('無法取得 Discord 使用者資料');
+    const errorBody = await response.text().catch(() => 'unknown');
+    throw new Error(`無法取得 Discord 使用者資料 (${response.status}): ${errorBody}`);
   }
 
   return (await response.json()) as {
