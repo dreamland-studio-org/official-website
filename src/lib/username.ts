@@ -17,7 +17,7 @@ export async function generateAvailableUsername(seed: string) {
     if (attempts.has(candidate)) continue;
     attempts.add(candidate);
 
-    const existing = await prisma.user.findUnique({ where: { username: candidate } });
+    const existing = await prisma.user.findFirst({ where: { username: candidate } });
     if (!existing) {
       return candidate;
     }
