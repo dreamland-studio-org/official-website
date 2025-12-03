@@ -37,7 +37,7 @@ export async function findUserFromProvider(profile: ProviderProfile) {
     return null;
   }
 
-  const matchedUser = await prisma.user.findUnique({
+  const matchedUser = await prisma.user.findFirst({
     where: { email: normalizedEmail },
   });
 
