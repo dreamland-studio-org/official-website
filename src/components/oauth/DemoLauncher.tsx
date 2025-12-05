@@ -7,13 +7,12 @@ import Link from 'next/link';
 import { oauthDemoApps } from '@/config/oauthApps';
 
 const DEFAULT_SCOPE = 'profile.basic profile.email';
-const DEFAULT_STATE = 'demo-state';
 
 export default function DemoLauncher() {
   const [clientId, setClientId] = useState('');
   const [redirectUri, setRedirectUri] = useState('http://localhost:4000/callback');
   const [scope, setScope] = useState(DEFAULT_SCOPE);
-  const [state, setState] = useState(DEFAULT_STATE);
+  const [state, setState] = useState(() => generateRandomState());
 
   const authorizeUrl = useMemo(() => {
     const params = new URLSearchParams();
@@ -44,7 +43,7 @@ export default function DemoLauncher() {
                   setClientId(app.clientId);
                   setRedirectUri(app.redirectUri);
                   setScope(app.scope);
-                  setState(app.state ?? DEFAULT_STATE);
+                  setState(generateRandomState());
                 }}
               >
                 <p className="font-semibold">{app.name}</p>
@@ -78,6 +77,18 @@ export default function DemoLauncher() {
       </div>
     </div>
   );
+}
+
+function generateRandomState(bytes = 16) {
+  if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
+    const buffer = new Uint8Array(bytes);
+    crypto.getRandomValues(buffer);
+    return Array.from(buffer)
+      .map((value) => value.toString(16).padStart(2, '0'))
+      .join('');
+  }
+
+  return Math.random().toString(36).slice(2, 2 + bytes * 2);
 }
 
 type FieldProps = {

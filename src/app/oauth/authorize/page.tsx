@@ -69,8 +69,8 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
         <p className="text-xs text-black/70">
           需要幫助嗎？請聯絡
           {' '}
-          <a className="underline" href="mailto:support@dreamland-studio.org">
-            support@dreamland-studio.org
+          <a className="underline" href="mailto:official@dreamland-studio.org">
+            official@dreamland-studio.org
           </a>
         </p>
       </div>

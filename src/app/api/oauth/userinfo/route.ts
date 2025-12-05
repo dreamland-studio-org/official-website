@@ -23,13 +23,13 @@ export async function GET(request: NextRequest) {
     }
 
     const user = storedToken.user;
-
     return NextResponse.json({
       sub: `user-${user.id}`,
-      user_id: user.id,
+      user_id: user.account_id,
       username: user.username,
       email: user.email,
       email_verified: user.emailVerified,
+      avatar: user.avatar ?? ""
     });
   } catch (error) {
     console.error('[oauth userinfo] unexpected error', error);

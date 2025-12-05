@@ -14,6 +14,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
+    const account_id = generateAccountUUID();
     const username = typeof body.username === 'string' ? body.username.trim() : '';
     const email = socialState?.email ?? (typeof body.email === 'string' ? body.email.trim().toLowerCase() : '');
     const password = typeof body.password === 'string' ? body.password : '';
@@ -44,24 +45,18 @@ export async function POST(request: NextRequest) {
 
     const newUser = await prisma.user.create({
       data: {
+        account_id,
         username,
         email,
         passwordHash,
         emailVerified: !!socialState, // Email is considered verified from social provider
+        ...(socialState
+          ? socialState.provider === 'google'
+            ? { googleId: socialState.providerAccountId }
+            : { discordId: socialState.providerAccountId }
+          : {}),
       },
     });
-
-    if (socialState) {
-      await prisma.userProvider.create({
-        data: {
-          provider: socialState.provider,
-          providerAccountId: socialState.providerAccountId,
-          userId: newUser.id,
-          email: socialState.email,
-          profile: JSON.stringify(socialState.profile),
-        },
-      });
-    }
 
     // Automatically log the user in
     const session = await createUserSession(newUser.id);
@@ -82,4 +77,8 @@ export async function POST(request: NextRequest) {
     console.error('[register] unexpected error', error);
     return NextResponse.json({ error: '無法建立帳號' }, { status: 500 });
   }
+}
+
+export function generateAccountUUID(): string {
+  return crypto.randomUUID();
 }
