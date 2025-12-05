@@ -79,6 +79,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export function generateAccountUUID(): string {
+function generateAccountUUID(): string {
   return crypto.randomUUID();
 }
