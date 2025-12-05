@@ -60,6 +60,9 @@ export default function ConsentCard({ username, email, clientId, clientName, red
 
   return (
     <div className="space-y-6 text-sm text-black">
+      <p className="rounded-2xl border border-amber-400/40 bg-amber-50 px-5 py-4 text-xs text-amber-900">
+        (NEW) 新版的登入驗證系統，由築夢之地開發。這並不是意外，這是會考霸團隊更新了登入驗證系統！
+      </p>
       <div className="rounded-2xl border border-black/10 bg-white px-5 py-4">
         <p className="text-[11px] uppercase tracking-[0.3em] text-black/50">目前登入</p>
         <p className="text-lg font-medium text-black">{username ?? '未命名使用者'}</p>

@@ -53,6 +53,9 @@ export default function RegisterCard({ returnTo, defaultEmail, socialProvider }:
           已透過 {getProviderLabel(socialProvider)} 驗證 Email，請設定使用者名稱與密碼完成註冊。
         </p>
       )}
+      <p className="rounded-2xl border border-amber-400/40 bg-amber-50 px-5 py-4 text-xs text-amber-900">
+        (NEW) 新版的登入驗證系統，由築夢之地開發。這並不是意外，這是會考霸團隊更新了登入驗證系統！
+      </p>
       <div className="grid gap-4">
         <div className="space-y-2">
           <label className="text-[11px] uppercase tracking-[0.3em] text-black/50">使用者名稱</label>

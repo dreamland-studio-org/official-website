@@ -53,6 +53,9 @@ export default function LoginCard({ clientId, redirectUri, scope, state }: Login
           註冊成功，請使用新帳號登入。
         </p>
       )}
+      <p className="rounded-2xl border border-amber-400/40 bg-amber-50 px-5 py-4 text-xs text-amber-900">
+        (NEW) 新版的登入驗證系統，由築夢之地開發。這並不是意外，這是會考霸團隊更新了登入驗證系統！
+      </p>
       <div className="rounded-2xl border border-black/10 bg-white px-5 py-4">
         <p className="text-black/70">請登入你的築夢之地帳號以繼續授權流程。</p>
       </div>
