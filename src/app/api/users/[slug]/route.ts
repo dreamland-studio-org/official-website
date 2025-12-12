@@ -19,9 +19,9 @@ export async function GET(_request: NextRequest, context: RouteContext) {
     return NextResponse.json({ error: 'missing_slug' }, { status: 400 });
   }
 
-  if (!UUID_V4_REGEX.test(slug)) {
-    return NextResponse.json({ error: 'invalid_slug' }, { status: 400 });
-  }
+  // if (!UUID_V4_REGEX.test(slug)) {
+  //   return NextResponse.json({ error: 'invalid_slug' }, { status: 400 });
+  // }
 
   try {
     const user = await prisma.user.findUnique({
