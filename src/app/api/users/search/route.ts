@@ -14,11 +14,19 @@ export async function GET(req: NextRequest) {
         },
       },
       select: {
+        id: true,
+        account_id: true,
+        username: true,
         email: true,
+        avatar: true,
+        emailVerified: true,
+        createdAt: true,
+        googleId: true,
+        discordId: true,
       },
       take: 10, // limit results
     });
-    return NextResponse.json({ emails: users.map(u => u.email) });
+    return NextResponse.json({ users });
   } catch (error) {
     console.error('[users search] unexpected error', error);
     return NextResponse.json({ error: 'server_error' }, { status: 500 });
