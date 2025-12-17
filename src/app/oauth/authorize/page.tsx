@@ -50,9 +50,9 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
       <AuthorizeBackdrop />
 
       <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col gap-8 lg:flex-row">
-        {/* <div className="flex-1 space-y-5">
+        <div className="flex-1 space-y-5">
           <AuthorizationTimeline stage={stage} />
-          <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-5 py-6 text-sm text-slate-600 shadow-xl shadow-slate-200/60 backdrop-blur-xl">
+          {/* <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-5 py-6 text-sm text-slate-600 shadow-xl shadow-slate-200/60 backdrop-blur-xl">
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
             <p className="text-[11px] uppercase tracking-[0.3em] text-slate-500">授權應用程式</p>
             <p className="mt-2 text-2xl font-semibold text-slate-900">{client.name}</p>
@@ -65,8 +65,8 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
               <span className="inline-flex h-2 w-2 rounded-full bg-emerald-400" />
               Dreamland 採用端對端加密，連線安全。
             </div>
-          </div>
-        </div> */}
+          </div> */}
+        </div>
 
         <div className="flex-1">
           <div className="rounded-[32px] border border-white/10 bg-white/95 px-8 py-10 text-black shadow-[0_25px_80px_rgba(0,0,0,0.15)]">
