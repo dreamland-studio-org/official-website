@@ -2,6 +2,7 @@
 
 import { FormEvent, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 type LoginCardProps = {
   clientId: string;
@@ -47,7 +48,7 @@ export default function LoginCard({ clientId, redirectUri, scope, state }: Login
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 text-sm text-black">
+    <motion.form onSubmit={handleSubmit} className="space-y-5 text-sm text-black" initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }}>
       {registerSuccess && (
         <p className="rounded-2xl border border-emerald-400/40 bg-emerald-50 px-5 py-4 text-sm text-emerald-700">
           註冊成功，請使用新帳號登入。
@@ -86,27 +87,43 @@ export default function LoginCard({ clientId, redirectUri, scope, state }: Login
       {error && <p className="text-sm text-red-500">{error}</p>}
 
       <div className="space-y-3">
-        <button
+        <motion.button
           type="submit"
-          className="w-full rounded-full bg-black py-3 text-center text-base font-semibold text-white transition hover:bg-black/80 disabled:opacity-60"
+          className="relative w-full overflow-hidden rounded-full bg-black py-3 text-center text-base font-semibold text-white transition disabled:opacity-60"
           disabled={isLoading}
+          whileHover={!isLoading ? { scale: 1.01 } : undefined}
+          whileTap={!isLoading ? { scale: 0.98 } : undefined}
         >
-          {isLoading ? '登入中...' : '登入並繼續'}
-        </button>
+          <span className="relative z-10 flex items-center justify-center gap-2">
+            {isLoading ? (
+              <>
+                <span className="inline-flex h-3.5 w-3.5 animate-spin rounded-full border border-white/60 border-t-transparent" />
+                登入中...
+              </>
+            ) : (
+              '登入並繼續'
+            )}
+          </span>
+          {isLoading && <span className="absolute inset-0 bg-gradient-to-r from-gray-800 via-black to-gray-800 opacity-70" />}
+        </motion.button>
 
         <div className="grid gap-2 sm:grid-cols-2">
-          <a
+          <motion.a
             href={`/oauth/login/google?returnTo=${encodeURIComponent(authorizeUrl)}`}
             className="rounded-full border border-black/10 bg-white px-4 py-2 text-center text-sm font-semibold text-black transition hover:bg-black hover:text-white"
+            whileHover={{ y: -1 }}
+            whileTap={{ scale: 0.97 }}
           >
             以 Google 登入
-          </a>
-          <a
+          </motion.a>
+          <motion.a
             href={`/oauth/login/discord?returnTo=${encodeURIComponent(authorizeUrl)}`}
             className="rounded-full border border-black/10 bg-white px-4 py-2 text-center text-sm font-semibold text-black transition hover:bg-black hover:text-white"
+            whileHover={{ y: -1 }}
+            whileTap={{ scale: 0.97 }}
           >
             以 Discord 登入
-          </a>
+          </motion.a>
         </div>
 
         <p className="text-xs text-black/60">
@@ -116,7 +133,7 @@ export default function LoginCard({ clientId, redirectUri, scope, state }: Login
           </a>
         </p>
       </div>
-    </form>
+    </motion.form>
   );
 }
 
