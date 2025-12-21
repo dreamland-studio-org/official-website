@@ -41,18 +41,18 @@ export async function POST(request: NextRequest) {
       provider === 'google'
         ? {
           provider: 'google',
-          providerAccountId: profile.sub,
-          email: profile.email,
-          emailVerified: profile.email_verified,
-          displayName: profile.name ?? profile.email,
+          providerAccountId: (profile as GoogleProfile).sub,
+          email: (profile as GoogleProfile).email,
+          emailVerified: (profile as GoogleProfile).email_verified,
+          displayName: (profile as GoogleProfile).name ?? (profile as GoogleProfile).email,
           profile,
         }
         : {
           provider: 'discord',
-          providerAccountId: profile.id,
-          email: profile.email,
-          emailVerified: profile.verified,
-          displayName: profile.global_name ?? profile.username,
+          providerAccountId: (profile as DiscordProfile).id,
+          email: (profile as DiscordProfile).email,
+          emailVerified: (profile as DiscordProfile).verified,
+          displayName: (profile as DiscordProfile).global_name ?? (profile as DiscordProfile).username,
           profile,
         },
     );
