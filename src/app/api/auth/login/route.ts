@@ -10,6 +10,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const identifier = typeof body.identifier === 'string' ? body.identifier.trim() : '';
     const password = typeof body.password === 'string' ? body.password : '';
+    const includeSessionToken = body.include_session_token === true || body.includeSessionToken === true;
 
     if (!identifier || !password) {
       return NextResponse.json({ error: '請輸入帳號與密碼' }, { status: 400 });
@@ -41,13 +42,24 @@ export async function POST(request: NextRequest) {
 
     const { rawToken, expiresAt } = await createUserSession(user.id);
 
-    const response = NextResponse.json({
+    const responseBody: {
+      user: { id: number; username: string; email: string };
+      session_token?: string;
+      session_expires_at?: string;
+    } = {
       user: {
         id: user.id,
         username: user.username,
         email: user.email,
       },
-    });
+    };
+
+    if (includeSessionToken) {
+      responseBody.session_token = rawToken;
+      responseBody.session_expires_at = expiresAt.toISOString();
+    }
+
+    const response = NextResponse.json(responseBody);
 
     response.cookies.set({
       name: SESSION_COOKIE_NAME,

@@ -12,13 +12,24 @@ const AUTH_CODE_TTL_MS = 5 * 60 * 1000;
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const clientId = typeof body.clientId === 'string' ? body.clientId : '';
-    const redirectUri = typeof body.redirectUri === 'string' ? body.redirectUri : '';
+    const clientId = typeof body.clientId === 'string'
+      ? body.clientId
+      : typeof body.client_id === 'string'
+        ? body.client_id
+        : '';
+    const redirectUri = typeof body.redirectUri === 'string'
+      ? body.redirectUri
+      : typeof body.redirect_uri === 'string'
+        ? body.redirect_uri
+        : '';
     const scope = typeof body.scope === 'string' ? body.scope : '';
     const state = typeof body.state === 'string' ? body.state : '';
     const decision = body.decision === 'deny' ? 'deny' : 'approve';
 
-    const sessionToken = request.cookies.get(SESSION_COOKIE_NAME)?.value;
+    const sessionToken =
+      extractSessionToken(request.headers.get('authorization')) ||
+      (typeof body.session_token === 'string' ? body.session_token : '') ||
+      request.cookies.get(SESSION_COOKIE_NAME)?.value;
     const session = await getSessionFromToken(sessionToken);
 
     if (!session) {
@@ -80,4 +91,13 @@ export async function POST(request: NextRequest) {
     console.error('[oauth authorize] unexpected error', error);
     return NextResponse.json({ error: '授權流程失敗' }, { status: 500 });
   }
+}
+
+function extractSessionToken(headerValue: string | null) {
+  if (!headerValue) return null;
+  const [scheme, token] = headerValue.split(' ');
+  if (!scheme || !token) return null;
+  const normalized = scheme.toLowerCase();
+  if (normalized !== 'bearer' && normalized !== 'session') return null;
+  return token.trim();
 }
