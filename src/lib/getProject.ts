@@ -14,7 +14,7 @@ const Projects: Record<string, ProjectData> = {
         name: "會考霸｜KaoBar",
         description: "一個整合會考資源、提供會考線上社群的免費資源整合平台，讓會考生再準備會考時事半功倍！",
         banner: "kaobar.png",
-        director: "糖豆魚",
+        director: "唐禹平",
         client: "築夢之地工作室",
         link: "https://kaobar.dreamland-studio.org/",
         status: 1,
@@ -28,6 +28,16 @@ const Projects: Record<string, ProjectData> = {
         client: "築夢之地工作室",
         status: 2,
         start_at: "2025-07-02",
+    },
+    "coollc": {
+        name: "Cool歷程",
+        description: "提供豐富的教材與教學規劃，讓學生上手學習歷程",
+        banner: "coollc.png",
+        director: "唐禹平",
+        client: "築夢之地工作室",
+        link: "https://coollc.dreamland-studio.org/",
+        status: 1,
+        start_at: "2025-12-12",
     },
     "outbox": {
         name: "OUTBOX｜夢想創造競賽",
@@ -48,9 +58,9 @@ export default async function getProject(params: string): Promise<ProjectData | 
 }
 
 export function getAllProjects(): ProjectData[] {
-  return Object.values(Projects);
+    return Object.values(Projects);
 }
 
 export function getActiveProjects(): ProjectData[] {
-  return Object.values(Projects).filter(p => p.status === 1);
+    return Object.values(Projects).filter(p => p.status === 1);
 }

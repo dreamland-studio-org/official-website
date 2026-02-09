@@ -23,6 +23,13 @@ const services = [
     banner: "gsatbar.png"
   },
   {
+    title: "Cool歷程",
+    idName: "coollc",
+    description: "提供豐富的教材與教學規劃，讓學生上手學習歷程",
+    link: "https://coollc.dreamland-studio.org/",
+    banner: "coollc.png"
+  },
+  {
     title: "OUTBOX",
     idName: "outbox",
     description:

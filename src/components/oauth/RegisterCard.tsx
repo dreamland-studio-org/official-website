@@ -47,20 +47,20 @@ export default function RegisterCard({ returnTo, defaultEmail, socialProvider }:
   };
 
   return (
-    <form onSubmit={handleRegister} className="space-y-4 text-sm text-black">
+    <form onSubmit={handleRegister} className="space-y-4 text-sm text-black dark:text-white">
       {socialProvider && (
-        <p className="rounded-2xl border border-black/10 bg-white px-5 py-4">
+        <p className="rounded-2xl border border-black/10 bg-white px-5 py-4 text-black dark:border-white/10 dark:bg-white/10 dark:text-white">
           已透過 {getProviderLabel(socialProvider)} 驗證 Email，請設定使用者名稱與密碼完成註冊。
         </p>
       )}
-      <p className="rounded-2xl border border-amber-400/40 bg-amber-50 px-5 py-4 text-xs text-amber-900">
+      <p className="rounded-2xl border border-amber-400/40 bg-amber-50 px-5 py-4 text-xs text-amber-900 dark:border-amber-400/40 dark:bg-amber-400/10 dark:text-amber-200">
         (NEW) 新版的登入驗證系統，由築夢之地開發。這並不是意外，這是會考霸團隊更新了登入驗證系統！
       </p>
       <div className="grid gap-4">
         <div className="space-y-2">
-          <label className="text-[11px] uppercase tracking-[0.3em] text-black/50">使用者名稱</label>
+          <label className="text-[11px] uppercase tracking-[0.3em] text-black/50 dark:text-white/60">使用者名稱</label>
           <input
-            className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-black focus:border-black focus:outline-none"
+            className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-black placeholder:text-black/40 focus:border-black focus:outline-none dark:border-white/10 dark:bg-[#0e2a47] dark:text-white dark:placeholder:text-white/40"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
             placeholder="3-32 個字元"
@@ -68,9 +68,9 @@ export default function RegisterCard({ returnTo, defaultEmail, socialProvider }:
           />
         </div>
         <div className="space-y-2">
-          <label className="text-[11px] uppercase tracking-[0.3em] text-black/50">Email</label>
+          <label className="text-[11px] uppercase tracking-[0.3em] text-black/50 dark:text-white/60">Email</label>
           <input
-            className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-black read-only:bg-black/5 focus:border-black focus:outline-none"
+            className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-black placeholder:text-black/40 read-only:bg-black/5 focus:border-black focus:outline-none dark:border-white/10 dark:bg-[#0e2a47] dark:text-white dark:placeholder:text-white/40 dark:read-only:bg-white/10"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             placeholder="you@example.com"
@@ -80,9 +80,9 @@ export default function RegisterCard({ returnTo, defaultEmail, socialProvider }:
           />
         </div>
         <div className="space-y-2">
-          <label className="text-[11px] uppercase tracking-[0.3em] text-black/50">密碼</label>
+          <label className="text-[11px] uppercase tracking-[0.3em] text-black/50 dark:text-white/60">密碼</label>
           <input
-            className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-black focus:border-black focus:outline-none"
+            className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-black placeholder:text-black/40 focus:border-black focus:outline-none dark:border-white/10 dark:bg-[#0e2a47] dark:text-white dark:placeholder:text-white/40"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             placeholder="至少 8 碼"
@@ -96,7 +96,7 @@ export default function RegisterCard({ returnTo, defaultEmail, socialProvider }:
 
       <button
         type="submit"
-        className="w-full rounded-full bg-black py-3 text-center text-base font-semibold text-white transition hover:bg-black/80 disabled:opacity-60"
+        className="w-full rounded-full bg-black py-3 text-center text-base font-semibold text-white transition hover:bg-black/80 disabled:opacity-60 dark:bg-white dark:text-black dark:hover:bg-white/90"
         disabled={isLoading}
       >
         {isLoading ? '建立中...' : '建立帳號並繼續'}
